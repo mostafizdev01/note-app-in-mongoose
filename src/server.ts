@@ -21,3 +21,5 @@ async function main() {
 
 main()
 
+
+/// mvc ==> model - view - controlar
