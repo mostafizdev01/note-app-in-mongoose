@@ -63,8 +63,8 @@ export const usersRoutes = express.Router()
     
 })
 
-/// Update a single data 
- usersRoutes.delete(' /:UserId', async (req: Request, res: Response)=>{
+/// delete a single data 
+ usersRoutes.delete('/:UserId', async (req: Request, res: Response)=>{
     const UserId = req.params.UserId
     /// =====>>>>>> single data finding steap one
     const Users = await User.findByIdAndDelete(UserId);
