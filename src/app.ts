@@ -78,6 +78,22 @@ app.get('/notes/:noteId', async (req: Request, res: Response)=>{
     
 })
 
+/// Update a single data 
+app.patch('/notes/:noteId', async (req: Request, res: Response)=>{
+    const noteId = req.params.noteId
+    const updatedBody = req.body;
+    /// =====>>>>>> single data finding steap one
+    const note = await Note.findByIdAndUpdate(noteId, updatedBody, {new: true});
+    /// =====>>>>>> single data finding steap two ===========>>>>>>>>>>
+    // const note = await Note.UpdateOne({_id: noteId});
+    res.status(200).json({
+        success: true,
+        message: "Single Note geting successfully ✅",
+        note
+    })
+    
+})
+
 
 app.get('/', (req: Request, res: Response)=>{
     res.send("Wellcome to my webserver..")
