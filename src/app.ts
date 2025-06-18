@@ -22,7 +22,8 @@ const noteSchema = new Schema({
         label: {type : String, default: ''},
         color: {type : String, default: 'gray'}
     }
-})
+}, {versionKey: false, timestamps: true}
+)
 
 const Note = model("Note", noteSchema)
 
@@ -85,10 +86,29 @@ app.patch('/notes/:noteId', async (req: Request, res: Response)=>{
     /// =====>>>>>> single data finding steap one
     const note = await Note.findByIdAndUpdate(noteId, updatedBody, {new: true});
     /// =====>>>>>> single data finding steap two ===========>>>>>>>>>>
-    // const note = await Note.UpdateOne({_id: noteId});
+    // const note = await Note.UpdateOne({_id: noteId}, updatedBody);
+    /// =====>>>>>> single data finding steap three ===========>>>>>>>>>>
+    // const note = await Note.findOneAndUpdate({_id: noteId}, updatedBody);
     res.status(200).json({
         success: true,
         message: "Single Note geting successfully ✅",
+        note
+    })
+    
+})
+
+/// Update a single data 
+app.delete('/notes/:noteId', async (req: Request, res: Response)=>{
+    const noteId = req.params.noteId
+    /// =====>>>>>> single data finding steap one
+    const note = await Note.findByIdAndDelete(noteId);
+    /// =====>>>>>> single data finding steap two ===========>>>>>>>>>>
+    // const note = await Note.Delete({_id: noteId});
+    /// =====>>>>>> single data finding steap three ===========>>>>>>>>>>
+    // const note = await Note.findOneAndDelete({_id: noteId});
+    res.status(200).json({
+        success: true,
+        message: "Single Note delete successfully ✅",
         note
     })
     
