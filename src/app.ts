@@ -53,7 +53,7 @@ app.post('/notes/create-note', async (req: Request, res: Response)=>{
 /// find data 
 app.get('/notes', async (req: Request, res: Response)=>{
     const notes = await Note.find();
-     console.log(notes);
+    //  console.log(notes);
      
     res.status(200).json({
         success: true,
@@ -65,13 +65,15 @@ app.get('/notes', async (req: Request, res: Response)=>{
 
 /// find a single data 
 app.get('/notes/:noteId', async (req: Request, res: Response)=>{
-    const notes = await Note.findById();
-     console.log(notes);
-     
+    const noteId = req.params.noteId
+    /// =====>>>>>> single data finding steap one
+    // const note = await Note.findById(noteId);
+    /// =====>>>>>> single data finding steap two ===========>>>>>>>>>>
+    const note = await Note.findOne({_id: noteId});
     res.status(200).json({
         success: true,
-        message: "Note geting successfully ✅",
-        notes
+        message: "Single Note geting successfully ✅",
+        note
     })
     
 })
