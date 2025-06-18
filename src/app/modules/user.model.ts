@@ -28,6 +28,7 @@ import { IUser } from "../interfaces/user.interface";
         enum: ['user', 'admin'],
         default: 'user'
     },
- })
+ }, {versionKey: false, timestamps: true}
+)
 
  export const User = model("User", userSchema)
