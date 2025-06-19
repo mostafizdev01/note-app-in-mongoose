@@ -1,37 +1,56 @@
 import express, { Request, Response } from "express";
 import { User } from "../modules/user.model";
+import { z } from "zod";
 
 export const usersRoutes = express.Router()
 
+// validation user data usenig ==>> zod
+
+const CreateUserZod = z.object(
+    {
+        firstName: z.string(),
+        lastName: z.string(),
+        age: z.number(),
+        email: z.string(),
+        password: z.string(),
+        role: z.string().optional(),
+    }
+)
+
 /// posted data 
- usersRoutes.post('/create-user', async (req: Request, res: Response)=>{
+usersRoutes.post('/create-user', async (req: Request, res: Response) => {
 
-    const body = req.body;
-    const Users = await User.create(body)
+    try {
+        const body = await CreateUserZod.parseAsync(req.body);
+        const Users = await User.create(body)
 
-    res.status(201).json({
-        success: true,
-        message: "User created successfully ✅",
-        Users
-    })
-    
+        res.status(201).json({
+            success: true,
+            message: "User created successfully ✅",
+            Users
+        })
+    } catch (err) {
+        console.log(err);
+
+    }
+
 })
 
 /// find data 
- usersRoutes.get('/', async (req: Request, res: Response)=>{
-    const  Users = await User.find();
+usersRoutes.get('/', async (req: Request, res: Response) => {
+    const Users = await User.find();
     //  console.log( );
-     
+
     res.status(200).json({
         success: true,
         message: "User geting successfully ✅",
         Users
     })
-    
+
 })
 
 /// find a single data 
- usersRoutes.get('/:UserId', async (req: Request, res: Response)=>{
+usersRoutes.get('/:UserId', async (req: Request, res: Response) => {
     const UserId = req.params.UserId
     /// =====>>>>>> single data finding steap one
     const Users = await User.findById(UserId);
@@ -42,15 +61,15 @@ export const usersRoutes = express.Router()
         message: "Single User geting successfully ✅",
         Users
     })
-    
+
 })
 
 /// Update a single data 
- usersRoutes.patch('/:UserId', async (req: Request, res: Response)=>{
+usersRoutes.patch('/:UserId', async (req: Request, res: Response) => {
     const UserId = req.params.UserId
     const updatedBody = req.body;
     /// =====>>>>>> single data finding steap one
-    const Users = await User.findByIdAndUpdate(UserId, updatedBody, {new: true});
+    const Users = await User.findByIdAndUpdate(UserId, updatedBody, { new: true });
     /// =====>>>>>> single data finding steap two ===========>>>>>>>>>>
     // const User = await User.UpdateOne({_id: UserId}, updatedBody);
     /// =====>>>>>> single data finding steap three ===========>>>>>>>>>>
@@ -60,11 +79,11 @@ export const usersRoutes = express.Router()
         message: "Single User geting successfully ✅",
         Users
     })
-    
+
 })
 
 /// delete a single data 
- usersRoutes.delete('/:UserId', async (req: Request, res: Response)=>{
+usersRoutes.delete('/:UserId', async (req: Request, res: Response) => {
     const UserId = req.params.UserId
     /// =====>>>>>> single data finding steap one
     const Users = await User.findByIdAndDelete(UserId);
@@ -77,5 +96,5 @@ export const usersRoutes = express.Router()
         message: "Single User delete successfully ✅",
         Users
     })
-    
+
 })
