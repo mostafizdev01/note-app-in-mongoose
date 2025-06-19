@@ -1,3 +1,4 @@
+import  validator  from 'validator';
 import { model, Schema } from "mongoose";
 import { IUser } from "../interfaces/user.interface";
 
@@ -21,15 +22,20 @@ import { IUser } from "../interfaces/user.interface";
         required: [true, "Email Already Exiest!!"],
         trim: true,
         lowercase: true,
-        validate: {
-            validator: function (value){
-                return /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(value)
-            },
-            message: function (props){
-                return `Email ${props.value} is not valid email`
-            }
-        }
+        // validate: {
+        //     validator: function (value){
+        //         return /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(value)
+        //     },
+        //     message: function (props){
+        //         return `Email ${props.value} is not valid email`
+        //     }
+        // }
+
+        /// validate steap - 02
+
+        validate: [validator.isEmail, "Invalid Email {VALUE}"]
     },
+
     // age: {
     //     type: String,
     //     required: true,
