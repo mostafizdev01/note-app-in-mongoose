@@ -1,6 +1,7 @@
+
 import express, { Request, Response } from "express";
-import { User } from "../modules/user.model";
 import { z } from "zod";
+import { User } from "../modules/user.model";
 
 export const usersRoutes = express.Router()
 
@@ -22,7 +23,29 @@ usersRoutes.post('/create-user', async (req: Request, res: Response) => {
 
     try {
         const body = await CreateUserZod.parseAsync(req.body);
-        const Users = await User.create(body)
+        
+        // password bcrypting...
+        // const password = await bcrypt.hash(body.password, 10);
+        // body.password=password
+        const password = await User.hashPassword(body.password)
+        console.log(password);
+        
+        body.password = password
+        const Users = await User.create(body) // ===>>>> static method for creating data
+
+        /// ===>> Built it and custom instance methods
+
+        
+
+        /// ===>> Built it and custom static methods
+
+        /// ===>> approch 2 created data
+        // const body = req.body
+        // const user = new User(body)
+        // //// create instence and password bcrypting..
+        // const password = await user.hasPassword(body.password)
+        // user.password = password
+        // await user.save()  /// === >>> instance method for creating data
 
         res.status(201).json({
             success: true,
