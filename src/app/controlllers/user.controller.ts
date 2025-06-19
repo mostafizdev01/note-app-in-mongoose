@@ -10,7 +10,7 @@ const CreateUserZod = z.object(
     {
         firstName: z.string(),
         lastName: z.string(),
-        age: z.number(),
+        // age: z.number(),
         email: z.string(),
         password: z.string(),
         role: z.string().optional(),

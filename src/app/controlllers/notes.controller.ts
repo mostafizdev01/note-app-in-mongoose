@@ -29,7 +29,7 @@ export const notesRoutes = express.Router()
 
 /// find data 
  notesRoutes.get('/', async (req: Request, res: Response)=>{
-    const  note = await Note.find();
+    const  note = await Note.find().populate("userId");
     //  console.log( );
      
     res.status(200).json({

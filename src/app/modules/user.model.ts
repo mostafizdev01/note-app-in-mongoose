@@ -59,4 +59,4 @@ import { IUser } from "../interfaces/user.interface";
  }, {versionKey: false, timestamps: true}
 )
 
- export const User = model("User", userSchema)
+ export const User = model<IUser>("User", userSchema)
