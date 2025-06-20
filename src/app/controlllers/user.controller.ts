@@ -27,10 +27,8 @@ usersRoutes.post('/create-user', async (req: Request, res: Response) => {
         // password bcrypting...
         // const password = await bcrypt.hash(body.password, 10);
         // body.password=password
-        const password = await User.hashPassword(body.password)
-        console.log(password);
-        
-        body.password = password
+        // const password = await User.hashPassword(body.password)
+        // body.password = password
         const Users = await User.create(body) // ===>>>> static method for creating data
 
         /// ===>> Built it and custom instance methods

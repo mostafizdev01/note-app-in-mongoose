@@ -2,6 +2,7 @@ import  bcrypt  from 'bcryptjs';
 import  validator  from 'validator';
 import { Model, model, Schema } from "mongoose";
 import { IUser, UserIntenceMethods, UserStaticMethods } from "../interfaces/user.interface";
+import { Note } from './notes.model';
 
 
  const userSchema = new Schema<IUser, UserStaticMethods, UserIntenceMethods>({
@@ -57,7 +58,7 @@ import { IUser, UserIntenceMethods, UserStaticMethods } from "../interfaces/user
         }, /// ===>> way 02
         default: 'user'
     },
- }, {versionKey: false, timestamps: true}
+ }, {versionKey: false, timestamps: true, toJSON: {virtuals: true}, toObject: {virtuals: true}}
 )
 
 userSchema.method("hashPassword", async function(plainPassword: string){
@@ -68,6 +69,27 @@ userSchema.method("hashPassword", async function(plainPassword: string){
 userSchema.static("hashPassword", async function(plainPassword: string){
     const password = await bcrypt.hash(plainPassword, 10);
     return password
+})
+
+userSchema.pre("save", async function(){
+    this.password = await bcrypt.hash(this.password, 10)
+})
+
+userSchema.post("save", async function(doc, next){
+    if(doc){
+      console.log(doc);
+      await Note.deleteMany({user: doc._id})
+    }
+    next()
+})
+
+userSchema.post("save", async function(doc, next){
+    console.log(`${doc.email} has been saved`);
+    next()
+})
+
+userSchema.virtual('fullName').get(function(){
+    return `${this.firstName} ${this.lastName}`
 })
 
  export const User = model<IUser, UserStaticMethods>("User", userSchema)
