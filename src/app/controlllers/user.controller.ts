@@ -62,6 +62,31 @@ usersRoutes.get('/', async (req: Request, res: Response) => {
     const Users = await User.find();
     //  console.log( );
 
+    // ****** Filtering data *********
+    // const userEmail = req.query.email;
+    // if(userEmail){
+    // users = await User.find({email: userEmail})
+    // }else{
+    // users = await User.find()
+    // }
+
+    /// ********* Sorting data *************
+    /// users = await User.find().sort({"email": "asc"})
+    /// users = await User.find().sort({"email": "ascending"})
+    /// users = await User.find().sort({"email": "ascending"})
+    /// users = await User.find().sort({"email": "desc"})
+    /// users = await User.find().sort({"email": "descending"})
+    /// users = await User.find().sort({"email": 1})
+    /// users = await User.find().sort({"email": -1})
+
+    /// ********* Skiping data *************
+    // users = await User.find().skip(10)
+
+
+    /// ********* Limit data *************
+    // users = await User.find().limit(3)
+
+
     res.status(200).json({
         success: true,
         message: "User geting successfully ✅",
