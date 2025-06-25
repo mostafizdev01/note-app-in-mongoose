@@ -40,19 +40,4 @@
 - প্রতিটি API তে সঠিক Validation ও Error Response দিয়েছি।  
 - Error Response এর ফরম্যাট consistent রাখা হয়েছে।
 
----
-
-## Technologies Used  
-- Node.js  
-- Express.js  
-- TypeScript  
-- MongoDB (Mongoose)  
-
----
-
-## Challenges & Learnings  
-- TypeScript দিয়ে স্কিমা ও মডেল তৈরির সময় টাইপ সেফটি বৃদ্ধি পেয়েছে।  
-- Middleware ও Mongoose methods দিয়ে বিজনেস লজিক ইমপ্লিমেন্ট করেছি।  
-- Aggregation pipeline নিয়ে ভালো ধারণা পেয়েছি।  
-- Proper Validation ও Error Handling করা শিখেছি।
 
